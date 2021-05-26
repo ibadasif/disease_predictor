@@ -7,7 +7,7 @@ import 'Utility.dart';
 class SaveImageDemo extends StatefulWidget {
   SaveImageDemo() : super();
 
-  final String title = "Flutter Save Image in Preferences";
+  final String title = "Select Image From Your Gallery";
 
   @override
   _SaveImageDemoState createState() => _SaveImageDemoState();

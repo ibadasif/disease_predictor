@@ -1,4 +1,6 @@
 import 'package:disease/image_picker.dart';
+import 'package:disease/login.dart';
+import 'package:disease/login_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {

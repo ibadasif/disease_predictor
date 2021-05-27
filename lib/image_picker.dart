@@ -42,11 +42,18 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
           return const Text(
             'Error Picking Image',
             textAlign: TextAlign.center,
+              style: TextStyle(
+              color: Colors.white
+          )
           );
         } else {
           return const Text(
             'No Image Selected',
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.center
+        ,
+        style: TextStyle(
+        color: Colors.white
+        )
           );
         }
       },
@@ -55,9 +62,12 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Color(0xff18203d);
+    final Color secondaryColor = Color(0xff232c51);
     return Scaffold(
+      backgroundColor: secondaryColor,
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: primaryColor,
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
@@ -85,7 +95,10 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
             null == imageFromPreferences ? Container() : imageFromPreferences,
           FlatButton(onPressed: ()async{
             print(await Utility.getImageFromPreferences());
-          }, child: Text('Print Console'))
+          }, child: Text('Print Console',
+          style: TextStyle(
+            color: Colors.white
+          ),))
         ],
         ),
       ),

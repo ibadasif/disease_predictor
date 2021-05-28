@@ -8,7 +8,7 @@ import 'Utility.dart';
 class SaveImageDemo extends StatefulWidget {
   SaveImageDemo() : super();
 
-  final String title = "Select Image From Your Gallery";
+  final String title = "Select Image ";
 
   @override
   _SaveImageDemoState createState() => _SaveImageDemoState();
@@ -83,7 +83,7 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
             },
           ),
           FlatButton.icon(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person,color: Colors.white,),
               label: Text('Logout',style: TextStyle(color: Colors.white),),
               onPressed:() async {
               await _auth.signOut();

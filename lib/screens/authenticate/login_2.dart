@@ -61,6 +61,23 @@ class _SignInState extends State<LoginScreen> {
                     height: 50,
                   ),
                   TextFormField(
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        hintStyle: TextStyle(color: Colors.white),
+                        fillColor: secondaryColor ,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder (
+                            borderSide: BorderSide(color: primaryColor, width: 1.5)
+                        ),
+                        focusedBorder: OutlineInputBorder (
+                            borderSide: BorderSide(color: Colors.blue, width: 1.5)
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+                          child: Icon(Icons.email,color: Colors.white,),
+                        ),
+                      ) ,
                     validator:  (val) => val.isEmpty? 'Enter an Email' : null,
                       onChanged: (val) {
                         setState(() =>  email = val);
@@ -69,6 +86,23 @@ class _SignInState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 40),
                   TextFormField(
+                    style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        hintStyle: TextStyle(color: Colors.white),
+                        fillColor: secondaryColor ,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder (
+                            borderSide: BorderSide(color: primaryColor, width: 1.5)
+                        ),
+                        focusedBorder: OutlineInputBorder (
+                            borderSide: BorderSide(color: Colors.blue, width: 1.5)
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+                          child: Icon(Icons.lock,color: Colors.white,),
+                        ),
+                      ),
                       validator:  (val) => val.length < 6 ? 'Enter a password of atleast 6 Chars' : null,
                       obscureText: true,
                       onChanged: (val) {

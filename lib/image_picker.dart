@@ -1,3 +1,4 @@
+import 'package:disease/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,7 +61,9 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
     );
   }
 
+  final AuthService _auth = AuthService();
   @override
+
   Widget build(BuildContext context) {
     final Color primaryColor = Color(0xff18203d);
     final Color secondaryColor = Color(0xff232c51);
@@ -79,6 +82,13 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
               });
             },
           ),
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+              label: Text('Logout',style: TextStyle(color: Colors.white),),
+              onPressed:() async {
+              await _auth.signOut();
+              }
+              )
         ],
       ),
       body: Center(

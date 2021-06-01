@@ -103,33 +103,26 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
             ),
             null == imageFromPreferences ? Container() : imageFromPreferences,
             FlatButton(
-                onPressed: () async {
-                  String _image = await Utility.getImageFromPreferences();
-                  Model model = Model(img: _image);
-                  final String modelJson = json.encode(model);
-                  final Response response = await post(
-                      'http://project3214.pythonanywhere.com/file/upload/',
-                      body: modelJson,
-                      headers: {
-                        'Accept': 'application/json',
-                        'content-type': 'application/json'
-                      });
-                  print(
-                      'MemberRegisterResponseStatusCode: ${response.statusCode}');
-                  if (response.statusCode == 200) {
-                    final dynamic responseBody = jsonDecode(response.body);
-                    final Model imageAuthResponseDto =
-                        Model.fromMap(responseBody as Map<String, dynamic>);
-                    print('ImageLoginResponseBody: $imageAuthResponseDto');
-                    return imageAuthResponseDto;
-                  } else {
-                    throw "can't register member";
-                  }
-                },
-                child: Text(
-                  'Print Console',
-                  style: TextStyle(color: Colors.white),
-                ))
+              onPressed: () async {
+                String _image = await Utility.getImageFromPreferences();
+                Model model = Model(img: _image);
+                final String modelJson = json.encode(model);
+                print(modelJson);
+                final Response response = await post(
+                    'http://project3214.pythonanywhere.com/upload/',
+                    body: modelJson);
+                print(
+                    'MemberRegisterResponseStatusCode: ${response.statusCode}');
+                if (response.statusCode == 200) {
+                  final dynamic responseBody = jsonDecode(response.body);
+                  print(response.body);
+                }
+              },
+              child: Text(
+                'Print Console',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),

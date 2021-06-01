@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:disease/models/api_model.dart';
 import 'package:disease/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
@@ -40,22 +44,13 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
             snapshot.data,
           );
         } else if (null != snapshot.error) {
-          return const Text(
-            'Error Picking Image',
-            textAlign: TextAlign.center,
-              style: TextStyle(
-              color: Colors.white
-          )
-          );
+          return const Text('Error Picking Image',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white));
         } else {
-          return const Text(
-            'No Image Selected',
-            textAlign: TextAlign.center
-        ,
-        style: TextStyle(
-        color: Colors.white
-        )
-          );
+          return const Text('No Image Selected',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white));
         }
       },
     );
@@ -63,7 +58,6 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
 
   final AuthService _auth = AuthService();
   @override
-
   Widget build(BuildContext context) {
     final Color primaryColor = Color(0xff18203d);
     final Color secondaryColor = Color(0xff232c51);
@@ -83,12 +77,17 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
             },
           ),
           FlatButton.icon(
-            icon: Icon(Icons.person,color: Colors.white,),
-              label: Text('Logout',style: TextStyle(color: Colors.white),),
-              onPressed:() async {
-              await _auth.signOut();
-              }
-              )
+              icon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              label: Text(
+                'Logout',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () async {
+                await _auth.signOut();
+              })
         ],
       ),
       body: Center(
@@ -103,13 +102,35 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
               height: 20.0,
             ),
             null == imageFromPreferences ? Container() : imageFromPreferences,
-          FlatButton(onPressed: ()async{
-            print(await Utility.getImageFromPreferences());
-          }, child: Text('Print Console',
-          style: TextStyle(
-            color: Colors.white
-          ),))
-        ],
+            FlatButton(
+                onPressed: () async {
+                  String _image = await Utility.getImageFromPreferences();
+                  Model model = Model(img: _image);
+                  final String modelJson = json.encode(model);
+                  final Response response = await post(
+                      'http://project3214.pythonanywhere.com/file/upload/',
+                      body: modelJson,
+                      headers: {
+                        'Accept': 'application/json',
+                        'content-type': 'application/json'
+                      });
+                  print(
+                      'MemberRegisterResponseStatusCode: ${response.statusCode}');
+                  if (response.statusCode == 200) {
+                    final dynamic responseBody = jsonDecode(response.body);
+                    final Model imageAuthResponseDto =
+                        Model.fromMap(responseBody as Map<String, dynamic>);
+                    print('ImageLoginResponseBody: $imageAuthResponseDto');
+                    return imageAuthResponseDto;
+                  } else {
+                    throw "can't register member";
+                  }
+                },
+                child: Text(
+                  'Print Console',
+                  style: TextStyle(color: Colors.white),
+                ))
+          ],
         ),
       ),
     );

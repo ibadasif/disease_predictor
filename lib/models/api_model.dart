@@ -1,4 +1,6 @@
 class Model {
+  String img;
+
   Model({this.img});
 
   factory Model.fromMap(Map<String, dynamic> map) {
@@ -12,6 +14,4 @@ class Model {
       'img': img,
     };
   }
-
-  String img;
 }

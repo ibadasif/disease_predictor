@@ -1,7 +1,4 @@
-import 'package:disease/image_picker.dart';
-import 'package:disease/login.dart';
 import 'package:disease/models/user.dart';
-import 'package:disease/screens/authenticate/login_2.dart';
 import 'package:disease/screens/wrapper.dart';
 import 'package:disease/services/auth.dart';
 import 'package:flutter/material.dart';

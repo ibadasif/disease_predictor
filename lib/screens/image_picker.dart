@@ -5,9 +5,9 @@ import 'package:disease/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
-import 'Utility.dart';
+import '../Utility.dart';
+import '../models/disease.dart';
 
 class SaveImageDemo extends StatefulWidget {
   SaveImageDemo() : super();
@@ -21,6 +21,8 @@ class SaveImageDemo extends StatefulWidget {
 class _SaveImageDemoState extends State<SaveImageDemo> {
   Future<File> imageFile;
   Image imageFromPreferences;
+
+  final Color logoGreen = Color(0xff25bcbb);
 
   pickImageFromGallery(ImageSource source) {
     setState(() {
@@ -57,6 +59,21 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
   }
 
   final AuthService _auth = AuthService();
+  String comingResponse;
+
+  Future<String> get_response(String modelJson) async {
+    final Response response = await post(
+        'http://project3214.pythonanywhere.com/upload/',
+        body: modelJson);
+    print('ImageResponseStatusCode: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      final dynamic responseBody = jsonDecode(response.body);
+      print(response.body);
+      Disease disease = Disease.fromJson(responseBody);
+      return disease.response;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Color(0xff18203d);
@@ -90,7 +107,7 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
               })
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -108,21 +125,20 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
                 Model model = Model(img: _image);
                 final String modelJson = json.encode(model);
                 print(modelJson);
-                final Response response = await post(
-                    'http://project3214.pythonanywhere.com/upload/',
-                    body: modelJson);
-                print(
-                    'MemberRegisterResponseStatusCode: ${response.statusCode}');
-                if (response.statusCode == 200) {
-                  final dynamic responseBody = jsonDecode(response.body);
-                  print(response.body);
-                }
+                comingResponse = await get_response(modelJson);
               },
-              child: Text(
-                'Print Console',
-                style: TextStyle(color: Colors.white),
-              ),
+              color: logoGreen,
+              child: Text('Predict Disease',
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
+              textColor: Colors.white,
             ),
+            SizedBox(
+              height: 20.0,
+            ),
+            // Text(
+            //   comingResponse,
+            //   style: TextStyle(color: Colors.white),
+            // )
           ],
         ),
       ),

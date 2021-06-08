@@ -69,8 +69,9 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
     if (response.statusCode == 200) {
       final dynamic responseBody = jsonDecode(response.body);
       print(response.body);
+      print(responseBody);
       Disease disease = Disease.fromJson(responseBody);
-      return disease.response;
+      return disease.label;
     }
   }
 
@@ -126,6 +127,7 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
                 final String modelJson = json.encode(model);
                 print(modelJson);
                 comingResponse = await get_response(modelJson);
+                print(comingResponse);
               },
               color: logoGreen,
               child: Text('Predict Disease',
@@ -135,10 +137,12 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
             SizedBox(
               height: 20.0,
             ),
-            // Text(
-            //   comingResponse,
-            //   style: TextStyle(color: Colors.white),
-            // )
+            comingResponse == null
+                ? Text('')
+                : Text(
+                    comingResponse,
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  ),
           ],
         ),
       ),

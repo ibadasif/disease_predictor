@@ -1,13 +1,13 @@
 class Disease {
-  String response;
+  String label;
 
-  Disease({this.response});
+  Disease({this.label});
 
   factory Disease.fromJson(Map<String, dynamic> json) => Disease(
-        response: json["number"],
+        label: json["label"],
       );
 
   Map<String, dynamic> toJson() => {
-        "number": response,
+        "label": label,
       };
 }

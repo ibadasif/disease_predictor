@@ -126,7 +126,10 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
                 Model model = Model(img: _image);
                 final String modelJson = json.encode(model);
                 print(modelJson);
-                comingResponse = await get_response(modelJson);
+                String label = await get_response(modelJson);
+                setState(() {
+                  comingResponse = label;
+                });
                 print(comingResponse);
               },
               color: logoGreen,

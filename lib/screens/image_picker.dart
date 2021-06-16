@@ -75,6 +75,13 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
     }
   }
 
+  final String acne =
+      "Medications:\n\n1- Isotretion Cream.\n2- Clindamycin Plus Tetrinoin.\n\nApply to affected areas once or twice daily or as directed by a dermatologist.";
+  final String psoriasis =
+      "Medications:\n\n1-Topical Steroids Cream.\n2- Hydrocortisone.\n\nApply to affected areas once or twice daily or as directed by a dermatologist";
+  final String eczema =
+      "Medications:\n\n1- Hydrophil Lotion.\n2- Hydrocortisone Cream.\n\nApply to affected areas once or twice daily or as directed by a dermatologist";
+
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Color(0xff18203d);
@@ -146,6 +153,24 @@ class _SaveImageDemoState extends State<SaveImageDemo> {
                     comingResponse,
                     style: TextStyle(color: Colors.white, fontSize: 40),
                   ),
+            SizedBox(
+              height: 20.0,
+            ),
+            if (comingResponse == "Acne")
+              Text(
+                acne,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              )
+            else if (comingResponse == "Psoriasis")
+              Text(
+                psoriasis,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              )
+            else if (comingResponse == "Eczema")
+              Text(
+                eczema,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              )
           ],
         ),
       ),
